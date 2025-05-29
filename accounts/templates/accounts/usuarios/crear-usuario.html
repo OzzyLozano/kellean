@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-start min-vh-100 pt-5">
+    <div class="card shadow-lg p-4" style="width: 400px; border-radius: 12px;">
+        <div class="card-header text-center bg-white border-0">
+            <h4 class="mb-0" style="color: #333;">Registrar Usuario</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label for="id_username" class="form-label">Usuario</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input type="text" name="username" id="id_username" class="form-control" placeholder="Ingrese su usuario" required>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="id_email" class="form-label">Correo Electrónico</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" name="email" id="id_email" class="form-control" placeholder="Ingrese su correo" required>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="id_password1" class="form-label">Contraseña</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Ingrese su contraseña" required>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="id_password2" class="form-label">Confirmar Contraseña</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Confirme su contraseña" required>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="id_user_type" class="form-label">Tipo de Usuario</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-users"></i></span>
+                        <select name="user_type" id="id_user_type" class="form-control" required>
+                            <option value="" disabled selected>Seleccione un tipo</option>
+                            <option value="CMP">Comprador</option>
+                            <option value="VND">Vendedor</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-100">Regístrar</button>
+                    <a href="{% url 'accounts:inicio' %}" class="btn btn-primary w-100 mt-2 shadow-sm">Regresar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

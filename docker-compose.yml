@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mercatec
+      DATABASE_URL: postgres://root:password@db:5432/mercatec
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://root:password@db:5432/mercatec
+      SECRET_KEY: f7gl3$*8ots%7_(1tgq@t3-kurpud%yim*6s7u&4&2k=g9ay3d
+      DEBUG: "True"
+
+volumes:
+  pg_data:

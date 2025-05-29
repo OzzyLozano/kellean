@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+  .texto{
+    font-size: 18px;
+  }
+
+
+</style>
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Cuentanos tu experiencia</h1>
+                    <p class="mb-4 texto">En MercaTec valoramos cada opinión. Explora las experiencias de otros compradores y comparte la tuya para ayudar a nuestra comunidad a tomar mejores decisiones. Tu voz es clave para mejorar y ofrecer siempre lo mejor.</p>
+                    {% if request.user.user_type == "CMP"%}
+					
+					<p><a href="{% url "tienda:comentar" %}" class="btn btn-secondary me-2">Comentar</a></p>{% endif %}
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="hero-img-wrap">
+                    <img src="{% static 'images/comenta.png' %}" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Blog Section -->
+<div class="blog-section">
+    <div class="container">
+        <div class="row">
+            <h1 class="mb-5">Comentarios</h1>
+            {% for comentario in comentarios %}
+                <div class="col-12 col-sm-6 col-md-4 mb-5">
+                    <div class="post-entry">
+                        {% if comentario.imagen %}
+                            <a href="#" class="post-thumbnail"><img src="{{ comentario.imagen.url }}" alt="Imagen" class="img-fluid"></a>
+                        {% endif %}
+                        <div class="post-content-entry">
+                            <h3><a href="#">{{ comentario.titulo }}</a></h3>
+                            <div class="meta">
+                                <span>por <a href="#">{{ comentario.usuario.username }}</a></span>
+                            </div>
+                            <p>{{ comentario.contenido|truncatechars:100 }}</p>
+							{% if comentario.usuario == request.user %}
+								<form action="{% url 'tienda:eliminar_comentario' comentario.pk %}" method="post" style="margin-top: 10px;">
+									{% csrf_token %}
+									<button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+								</form>
+							{% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No hay comentarios aún.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

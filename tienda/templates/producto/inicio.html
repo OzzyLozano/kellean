@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+  .texto{
+    font-size: 20px;
+  }
+
+
+</style>
+<div class="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5">
+          <div class="intro-excerpt">
+            <h1>Diseño Sofisticado <span class="d-block">ideal para espacios con estilo</span></h1>
+            <p class="mb-4 texto">Esta sofisticada silla combina elegancia y confort con un diseño moderno y minimalista.</p>
+            <p><a href="{% url "tienda:all_products" %}" class="btn btn-secondary me-2">Comprar</a></p>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="hero-img-wrap">
+            <img src="{% static 'images/Silla.jpg' %}" class="img-fluid">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+  <!-- Start Why Choose Us Section -->
+  <div class="why-choose-section">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-6">
+          <h2 class="section-title">¿Por qué escogernos?</h2>
+          <p>Nos esforzamos por ofrecer productos de la más alta calidad, con materiales duraderos y un diseño cuidado.</p>
+
+          <div class="row my-5">
+            <div class="col-6 col-md-6">
+              <div class="feature">
+                <div class="icon">
+                  <img src="{% static 'images/truck.svg' %}" class="img-fluid" alt="Envío rápido">
+                </div>
+                <h3>Rápido &amp; Envío Gratis</h3>
+                <p>Entrega rápida, sin costo adicional.</p>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-6">
+              <div class="feature">
+                <div class="icon">
+                  <img src="{% static 'images/bag.svg' %}" class="img-fluid" alt="Compras fáciles">
+                </div>
+                <h3>Compras Fáciles</h3>
+                <p>Encuentra lo que necesitas rápidamente.</p>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-6">
+              <div class="feature">
+                <div class="icon">
+                  <img src="{% static 'images/support.svg' %}" class="img-fluid" alt="Soporte 24/7">
+                </div>
+                <h3>Soporte 24/7</h3>
+                <p>Ayuda en todo momento.</p>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-6">
+              <div class="feature">
+                <div class="icon">
+                  <img src="{% static 'images/return.svg' %}" class="img-fluid" alt="Devoluciones">
+                </div>
+                <h3>Devoluciones</h3>
+                <p>Proceso simple y sin complicaciones.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="img-wrap">
+            <img src="{% static 'images/why-choose-us-img.jpg' %}" class="img-fluid" alt="Por qué elegirnos">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Why Choose Us Section -->
+
+  <!-- Start Popular Product -->
+  <div class="popular-product">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
+          <div class="product-item-sm d-flex">
+            <div class="thumbnail">
+              <img src="{% static 'images/air1.jpg' %}" class="img-fluid" alt="Nike Air Max 90">
+            </div>
+            <div class="pt-3">
+              <h3>Nike Air Max 90</h3>
+              <p>Comodidad y estilo único en cada pisada</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
+          <div class="product-item-sm d-flex">
+            <div class="thumbnail">
+              <img src="{% static 'images/barca.jpg' %}" class="img-fluid" alt="Barca x TS">
+            </div>
+            <div class="pt-3">
+              <h3>Barca x TS</h3>
+              <p>El Jersey con más estilo, el mejor</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
+          <div class="product-item-sm d-flex">
+            <div class="thumbnail">
+              <img src="{% static 'images/Sauvageedt.png' %}" class="img-fluid" alt="Dior Sauvage">
+            </div>
+            <div class="pt-3">
+              <h3>Dior Sauvage</h3>
+              <p>Fragancia con frescura y potencia cítrica</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="hero">
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col-lg-5">
+        <div class="intro-excerpt">
+          <h1>Carrito</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="untree_co-section before-footer-section">
+  <div class="container">
+    <div class="row mb-5">
+      <form class="col-md-12" method="post">
+        {% csrf_token %}
+        <div class="site-blocks-table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="product-thumbnail">Imagen</th>
+                <th class="product-name">Producto</th>
+                <th class="product-price">Precio</th>
+                <th class="product-quantity">Cantidad</th>
+                <th class="product-total">Total</th>
+                <th class="product-remove">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if prods_carrito %}
+                {% for item in prods_carrito %}
+                  <tr>
+                    <td class="product-thumbnail">
+                      {% if item.producto.imagen %}
+                        <img src="{{ item.producto.imagen.url }}" alt="{{ item.producto.nombre }}" class="img-fluid" width="100">
+                      {% else %}
+                        <div class="bg-secondary text-white text-center d-flex align-items-center justify-content-center" style="width:100px; height:100px;">
+                          Sin Imagen
+                        </div>
+                      {% endif %}
+                    </td>
+                    <td class="product-name">
+                      <h2 class="h5 text-black">{{ item.producto.nombre }}</h2>
+                    </td>
+                    <td>${{ item.producto.precio }}</td>
+                    <td>
+                      <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
+                        <div class="input-group-prepend">
+                          <button class="btn btn-outline-black decrease" type="button">&minus;</button>
+                        </div>
+                        <input type="text" class="form-control text-center quantity-amount"
+                               value="{{ item.cantidad }}"
+                               readonly
+                               data-precio="{{ item.producto.precio }}"
+                               data-producto-id="{{ item.pk }}">
+                        <div class="input-group-append">
+                          <button type="button" class="btn btn-outline-black increase">&plus;</button>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <strong id="total-producto-{{ item.pk }}">$ {{ item.total }}</strong>
+                    </td>
+                    <td>
+                      <a href="{% url 'tienda:eliminar_producto_carrito' item.pk %}" class="btn btn-black btn-sm">X</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="6" class="text-center text-muted">No hay productos en el carrito.</td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </form>
+    </div>
+
+    <!-- Totales sin cupones -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row mb-5">
+          <div class="col-md-6">
+            <a href="{% url 'tienda:all_products' %}" class="btn btn-outline-black btn-sm btn-block">Seguir comprando</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 pl-5">
+        <div class="row justify-content-end">
+          <div class="col-md-7">
+            <div class="row">
+              <div class="col-md-12 text-right border-bottom mb-5">
+                <h3 class="text-black h4 text-uppercase">Total</h3>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <span class="text-black">Subtotal</span>
+              </div>
+              <div class="col-md-6 text-right">
+                <strong class="text-black" id="subtotal">${{ total }}</strong>
+              </div>
+            </div>
+
+            <div class="col-md-6 text-right">
+                <strong class="text-black" id="envio">$50.00</strong>
+              </div>
+
+            <div class="row mb-5">
+              <div class="col-md-6">
+                <span class="text-black">Total</span>
+              </div>
+              <div class="col-md-6 text-right">
+                <strong class="text-black" id="total">${{ total|floatformat:2|add:"50" }}</strong>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <a href="{% url "tienda:checkout" carrito.pk %}" class="btn btn-black btn-lg py-3 btn-block payment">Proceder a pagar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const envioFijo = 50.0;
+
+  function actualizarTotales() {
+    let subtotal = 0;
+
+    document.querySelectorAll(".quantity-amount").forEach(input => {
+      const precio = parseFloat(input.dataset.precio);
+      const cantidad = parseInt(input.value);
+      const productoId = input.dataset.productoId;
+      const totalProducto = precio * cantidad;
+      subtotal += totalProducto;
+
+      const totalElemento = document.getElementById(`total-producto-${productoId}`);
+      if (totalElemento) {
+        totalElemento.textContent = "$" + totalProducto.toFixed(2);
+      }
+    });
+
+    document.getElementById("subtotal").textContent = "$" + subtotal.toFixed(2);
+
+    const total = subtotal + envioFijo;
+    document.getElementById("total").textContent = "$" + total.toFixed(2);
+  }
+
+  document.querySelectorAll(".increase").forEach(btn => {
+    btn.addEventListener("click", function (event) {
+      event.preventDefault();
+      const input = this.closest(".quantity-container").querySelector(".quantity-amount");
+      input.value = (parseInt(input.value) + 1)-1;
+      actualizarTotales();
+    });
+  });
+
+  document.querySelectorAll(".decrease").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const input = this.closest(".quantity-container").querySelector(".quantity-amount");
+      input.value = Math.max((1, parseInt(input.value) - 1)+1);
+      actualizarTotales();
+    });
+  });
+  
+
+  actualizarTotales(); // inicial
+});
+</script>
+{% endblock %}

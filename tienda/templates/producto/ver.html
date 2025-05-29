@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow-sm">
+                <div class="row g-0">
+                    <!-- Imagen del producto -->
+                    <div class="col-md-4">
+                        {% if producto.imagen %}
+                            <img src="{{ producto.imagen.url }}" class="img-fluid rounded-start" alt="{{ producto.nombre }}">
+                        {% else %}
+                            <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 100%; min-height: 200px;">
+                                <span>Sin imagen</span>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Información del producto -->
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">{{ producto.nombre }}</h5>
+                            <p class="card-text">{{ producto.descripcion }}</p>
+
+                            <p class="card-text mb-1">
+                                <small class="text-muted"><strong>Categoría:</strong> {{ producto.get_categoria_display }}</small>
+                            </p>
+                            <p class="card-text mb-1">
+                                <small class="text-muted"><strong>Código:</strong> {{ producto.codigo }}</small>
+                            </p>
+                            <p class="card-text mb-3">
+                                <small class="text-muted"><strong>Estado:</strong> {{ producto.estado }}</small>
+                            </p>
+
+                            <h5 class="text-success fw-bold mb-4">${{ producto.precio }}</h5>
+
+                            <form method="POST" action="{% url 'tienda:agregar_carrito' producto.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success w-100">
+                                    Agregar al carrito
+                                </button>
+                            </form>
+
+                            <a href="{% url 'tienda:all_products' %}" class="btn btn-primary w-100">Regresar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<!-- Estilos personalizados -->
+<style>
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #007bff;
+        text-transform: uppercase;
+        padding-bottom: 5px;
+        white-space: nowrap;
+    }
+
+    .section-subtitle {
+        font-size: 1.2rem;
+        color: #555;
+    }
+
+    .product-card {
+        background-color: #fff;
+        border: 1px solid #eaeaea;
+        border-radius: 15px;
+        padding: 15px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card img {
+        max-width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .product-title {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .product-price {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    .btn-agregar {
+        font-size: 0.95rem;
+        font-weight: 500;
+        padding: 10px 20px;
+        border-radius: 8px;
+    }
+
+    @media (max-width: 768px) {
+        .product-card img {
+            height: 160px;
+        }
+    }
+</style>
+
+<!-- Sección Hero -->
+<div class="hero">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="intro-excerpt text-center">
+                    <h1 class="section-title">Productos de Tecnologia</h1>
+                    <p class="section-title">Descubre nuestra increíble selección</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de Productos -->
+<div class="untree_co-section product-section before-footer-section">
+    <div class="container">
+        <div class="row g-4">
+            {% for producto in productos %}
+            <div class="col-12 col-sm-6 col-lg-4 d-flex">
+                <div class="product-card w-100">
+                    <form method="POST" action="{% url 'tienda:agregar_carrito' producto.pk %}">
+                        {% csrf_token %}
+                        <a href="{% url "tienda:ver_producto" producto.id %}"><img src="{{ producto.imagen.url }}" alt="Imagen de {{ producto.nombre }}"></a>
+                        <h3 class="product-title">{{ producto.nombre }}</h3>
+                        <div class="product-price">${{ producto.precio|floatformat:2|intcomma }}</div>
+                        <button type="submit" class="btn btn-primary btn-agregar">Agregar al carrito</button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="text-center">No hay productos disponibles.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

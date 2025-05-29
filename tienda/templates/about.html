@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  .texto{
+    font-size: 18px;
+  }
+
+
+</style>
+<div class="hero">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-lg-5">
+							<div class="intro-excerpt">
+								<h1>Acerca de nosotros</h1>
+								<p class="mb-4 texto">En MercaTec, creemos que comprar en línea debe ser fácil, rápido y seguro. Somos una plataforma de comercio digital que conecta a vendedores y compradores con una amplia variedad de productos, ofreciendo precios competitivos, envíos eficientes y un servicio excepcional.</p>
+								<p><a href="{% url "tienda:all_products" %}" class="btn btn-secondary me-2">Comprar</a></p>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<div class="hero-img-wrap">
+								<img src="{% static 'images/logo.png' %}" class="img-fluid">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- End Hero Section -->
+
+		
+
+		<!-- Start Why Choose Us Section -->
+		<div class="why-choose-section">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-lg-6">
+						<h2 class="section-title">¿Por qué escogernos?</h2>
+						<p>Nos esforzamos por ofrecer diferentes productos de la más alta calidad, con materiales duraderos y un diseño cuidadosamente pensado para cada detalle.</p>
+
+						<div class="row my-5">
+							<div class="col-6 col-md-6">
+								<div class="feature">
+									<div class="icon">
+										<img src="{% static "images/truck.svg" %}" alt="Image" class="imf-fluid">
+									</div>
+									<h3>Rápido &amp; Envío Gratis</h3>
+									<p>Recibe tus productos en tiempo récord con nuestra opción de entrega rápida, sin costo adicional.</p>
+								</div>
+							</div>
+
+							<div class="col-6 col-md-6">
+								<div class="feature">
+									<div class="icon">
+										<img src="{% static "images/bag.svg" %}" alt="Image" class="imf-fluid">
+									</div>
+									<h3>Compras Faciles</h3>
+									<p>Navega por nuestra tienda con un diseño intuitivo que te permite encontrar lo que necesitas en segundos.</p>
+								</div>
+							</div>
+
+							<div class="col-6 col-md-6">
+								<div class="feature">
+									<div class="icon">
+										<img src="{% static "images/support.svg" %}" alt="Image" class="imf-fluid">
+									</div>
+									<h3>Soporte 24/7</h3>
+									<p>Nuestro equipo está disponible en todo momento para ayudarte con cualquier duda o problema.</p>
+								</div>
+							</div>
+
+							<div class="col-6 col-md-6">
+								<div class="feature">
+									<div class="icon">
+										<img src="{% static "images/return.svg" %}" alt="Image" class="imf-fluid">
+									</div>
+									<h3>Devoluciones</h3>
+									<p>Si necesitas devolver un producto, nuestro proceso es simple, ágil y sin complicaciones.</p>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-5">
+						<div class="img-wrap">
+							<img src="{% static "images/why-choose-us-img.jpg" %}" alt="Image" class="img-fluid">
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+		<script src="js/bootstrap.bundle.min.js"></script>
+		<script src="js/tiny-slider.js"></script>
+		<script src="js/custom.js"></script>
+		<script>
+    document.getElementById("user-button").addEventListener("click", function(event) {
+        event.preventDefault(); // Evita que el enlace recargue la página
+        document.querySelector(".container").scrollIntoView({ behavior: "smooth" }); // Hace scroll suave al formulario
+    });
+</script>
+
+{% endblock  %}

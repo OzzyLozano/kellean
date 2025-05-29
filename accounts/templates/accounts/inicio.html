@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-5 fw-bold">Lista de Usuarios</h1>
+
+    <!-- Botón para crear nuevo usuario -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{% url 'accounts:crear_usuario' %}" class="btn btn-success">
+            Crear Usuario
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre de Usuario</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Fecha de Creación</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ usuario.username }}</td>
+                            <td>{{ usuario.email }}</td>
+                            <td>{{ usuario.date_joined|date:"d/m/Y" }}</td>
+                            <td>
+                                <!-- Botón para ver detalles del usuario -->
+                                <a href="{% url 'accounts:ver_usuario' usuario.pk %}" class="btn btn-info btn-sm">Ver</a>
+                                <!-- Botón para eliminar usuario -->
+                                <form method="POST" action="{% url 'accounts:eliminar_usuario' usuario.pk %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">No hay usuarios disponibles.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

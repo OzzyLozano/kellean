@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Editar Producto</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Renderiza el formulario con los campos y etiquetas -->
+        <button type="submit" class="btn btn-primary">Editar Producto</button>
+        <a class="btn btn-primary" href="{% url "accounts:ver_usuario" request.user.id %}">Regresar</a>
+    </form>
+</div>
+
+{% endblock %}
