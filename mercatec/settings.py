@@ -8,6 +8,8 @@ environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+environ.Env.read_env(os.path.join(BASE_DIR, 'config.env'))
+
 SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
@@ -64,12 +66,12 @@ WSGI_APPLICATION = 'mercatec.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': env('DB_ENGINE'),
-		'NAME': env('DB_NAME'),
-	    'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-	    'HOST': env('DB_HOST',default='localhost'),
-		'PORT': env('DB_PORT',default=3306),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mercatec',
+        'USER': 'mercatecuser',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
